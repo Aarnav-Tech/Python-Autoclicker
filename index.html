@@ -1,114 +1,93 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Python Autoclicker</title>
-  <style>
-    /* style.css */
-body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: #111;
-  color: #eee;
-  line-height: 1.6;
-  padding: 0 1rem;
-}
+<html lang="en" class="bg-gray-900 text-white">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Python Autoclicker</title>
+    <link rel="icon" href="https://raw.githubusercontent.com/Aarnav-Tech/Python-Autoclicker/refs/heads/web/app.ico" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="font-sans">
 
-header {
-  text-align: center;
-  padding: 2rem 0;
-  background: #1c1c1c;
-}
+    <!-- Header -->
+    <header class="text-center py-12 bg-gray-800 shadow-md">
+      <h1 class="text-4xl font-extrabold text-green-400">🐍 Python Autoclicker</h1>
+      <p class="text-lg text-gray-300 mt-2">Fast, simple, and customizable Python-based autoclicker.</p>
+      <div class="mt-6 flex justify-center flex-wrap gap-4">
+        <a href="https://github.com/Aarnav-Tech/Python-Autoclicker/archive/refs/heads/main.zip"
+           target="_blank"
+           class="px-6 py-2 bg-green-500 text-white rounded-full hover:bg-green-600 transition font-semibold shadow-lg">
+          ⬇ Download ZIP
+        </a>
+        <a href="https://github.com/Aarnav-Tech/Python-Autoclicker"
+           target="_blank"
+           class="px-6 py-2 border border-green-400 text-green-400 rounded-full hover:bg-green-600 hover:text-white transition font-semibold shadow-lg">
+          ⭐ View on GitHub
+        </a>
+      </div>
+    </header>
 
-h1 {
-  margin-bottom: 0.3rem;
-}
+    <!-- OS Warning -->
+    <div id="os-warning" class="max-w-3xl mx-auto px-6 py-4 hidden bg-red-800 text-red-100 border border-red-500 rounded mt-8">
+      ⚠️ This project uses the <code>msvcrt</code> module which only works on Windows. You may encounter errors on macOS/Linux.
+    </div>
 
-.button {
-  display: inline-block;
-  background: #4caf50;
-  color: white;
-  padding: 0.7rem 1.5rem;
-  margin: 0.5rem;
-  text-decoration: none;
-  border-radius: 5px;
-  font-weight: bold;
-}
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-6 py-12 space-y-16">
 
-.button.ghost {
-  background: transparent;
-  border: 2px solid #4caf50;
-  color: #4caf50;
-}
+      <!-- Features -->
+      <section>
+        <h2 class="text-2xl font-bold text-green-400 mb-4">🛠️ Features</h2>
+        <ul class="list-disc list-inside text-gray-300 space-y-2">
+          <li>✔ Cross-platform design (but only works on Windows)</li>
+          <li>✔ Set custom click interval and button</li>
+          <li>✔ Global hotkeys to start and stop</li>
+          <li>✔ Lightweight, no install required</li>
+        </ul>
+      </section>
 
-main {
-  max-width: 800px;
-  margin: 2rem auto;
-}
+      <!-- How to Use -->
+      <section>
+        <h2 class="text-2xl font-bold text-green-400 mb-4">📦 How to Use</h2>
+        <ol class="list-decimal list-inside text-gray-300 space-y-2">
+          <li>Download the ZIP and extract it.</li>
+          <li>Make sure Python 3.10+ is installed.</li>
+          <li>Install the dependency:
+            <code class="bg-gray-800 text-green-300 px-2 py-1 rounded">pip install pynput</code>
+          </li>
+          <li>Run the app:
+            <code class="bg-gray-800 text-green-300 px-2 py-1 rounded">python autoclicker.py</code>
+          </li>
+        </ol>
+      </section>
 
-section {
-  margin-bottom: 2rem;
-}
+      <!-- GitHub Button -->
+      <section class="text-center">
+        <h2 class="text-2xl font-bold text-green-400 mb-4">🔗 GitHub</h2>
+        <iframe
+          src="https://ghbtns.com/github-btn.html?user=Aarnav-Tech&repo=Python-Autoclicker&type=star&count=true&size=large"
+          frameborder="0"
+          scrolling="0"
+          width="160"
+          height="30"
+          title="GitHub Stars"
+        ></iframe>
+      </section>
 
-ul li, ol li {
-  margin: 0.5rem 0;
-}
+    </main>
 
-code {
-  background: #222;
-  padding: 0.2rem 0.4rem;
-  border-radius: 3px;
-}
+    <!-- Footer -->
+    <footer class="text-center text-gray-500 py-6 border-t border-gray-700">
+      Made with ❤️ by <a href="https://github.com/Aarnav-Tech" target="_blank" class="text-green-400 hover:underline">Aarnav</a>
+    </footer>
 
-footer {
-  text-align: center;
-  padding: 1rem 0;
-  background: #1c1c1c;
-  font-size: 0.9rem;
-  margin-top: 2rem;
-}
+    <!-- OS Detection Script -->
+    <script>
+      const isWindows = navigator.userAgent.includes("Windows");
+      if (!isWindows) {
+        document.getElementById("os-warning").classList.remove("hidden");
+      }
+    </script>
 
-  </style>
-  <link rel="icon" href="https://raw.githubusercontent.com/Aarnav-Tech/Python-Autoclicker/refs/heads/web/app.ico" />
-</head>
-<body>
-  <header>
-    <h1>🐍 Python Autoclicker</h1>
-    <p>Fast, simple, and customizable autoclicker written in Python.</p>
-    <a class="button" href="https://github.com/Aarnav-Tech/Python-Autoclicker/archive/refs/heads/main.zip" target="_blank">⬇ Download ZIP</a>
-    <a class="button ghost" href="https://github.com/Aarnav-Tech/Python-Autoclicker" target="_blank">⭐ View on GitHub</a>
-  </header>
-
-  <main>
-    <section>
-      <h2>🛠️ Features</h2>
-      <ul>
-        <li>✔ Cross-platform (Windows, Linux, macOS)</li>
-        <li>✔ Choose click interval and button</li>
-        <li>✔ Start/stop with hotkeys</li>
-        <li>✔ No installation required</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>📦 How to Use</h2>
-      <ol>
-        <li>Download and unzip the repo.</li>
-        <li>Install Python 3.10+ if not already installed.</li>
-        <li>Install dependencies: <code>pip install pynput</code></li>
-        <li>Run: <code>python autoclicker.py</code></li>
-      </ol>
-    </section>
-
-    <section>
-      <h2>🔗 GitHub</h2>
-      <iframe src="https://ghbtns.com/github-btn.html?user=Aarnav-Tech&repo=Python-Autoclicker&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160" height="30" title="GitHub Stars"></iframe>
-    </section>
-  </main>
-
-  <footer>
-    <p>Made with ❤️ by Aarnav</p>
-  </footer>
-</body>
+  </body>
 </html>
