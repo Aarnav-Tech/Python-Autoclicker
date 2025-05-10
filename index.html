@@ -12,24 +12,24 @@
     <!-- Header -->
     <header class="text-center py-12 bg-gray-800 shadow-md">
       <h1 class="text-4xl font-extrabold text-green-400">🐍 Python Autoclicker</h1>
-      <p class="text-lg text-gray-300 mt-2">Fast, simple, and customizable Python-based autoclicker.</p>
+      <p class="text-lg text-gray-300 mt-2">Fast, simple, and customizable Python-based autoclicker for Windows.</p>
       <div class="mt-6 flex justify-center flex-wrap gap-4">
-        <a href="https://github.com/Aarnav-Tech/Python-Autoclicker/archive/refs/heads/main.zip"
+        <a href="https://github.com/Aarnav-Tech/Python-Autoclicker/releases/download/v1/autoclicker.exe"
            target="_blank"
            class="px-6 py-2 bg-green-500 text-white rounded-full hover:bg-green-600 transition font-semibold shadow-lg">
-          ⬇ Download ZIP
+          🖱️ Download .exe (v1)
         </a>
-        <a href="https://github.com/Aarnav-Tech/Python-Autoclicker"
+        <a href="https://github.com/Aarnav-Tech/Python-Autoclicker/archive/refs/heads/main.zip"
            target="_blank"
            class="px-6 py-2 border border-green-400 text-green-400 rounded-full hover:bg-green-600 hover:text-white transition font-semibold shadow-lg">
-          ⭐ View on GitHub
+          📦 Source Code (.zip)
         </a>
       </div>
     </header>
 
     <!-- OS Warning -->
     <div id="os-warning" class="max-w-3xl mx-auto px-6 py-4 hidden bg-red-800 text-red-100 border border-red-500 rounded mt-8">
-      ⚠️ This project uses the <code>msvcrt</code> module which only works on Windows. You may encounter errors on macOS/Linux.
+      ⚠️ This autoclicker uses the <code>msvcrt</code> module which only works on <strong>Windows</strong>. You may encounter errors on macOS/Linux.
     </div>
 
     <!-- Main Content -->
@@ -39,10 +39,10 @@
       <section>
         <h2 class="text-2xl font-bold text-green-400 mb-4">🛠️ Features</h2>
         <ul class="list-disc list-inside text-gray-300 space-y-2">
-          <li>✔ Cross-platform design (but only works on Windows)</li>
-          <li>✔ Set custom click interval and button</li>
+          <li>✔ Ultra-lightweight and fast</li>
+          <li>✔ Set custom click intervals and button</li>
           <li>✔ Global hotkeys to start and stop</li>
-          <li>✔ Lightweight, no install required</li>
+          <li>✔ Only one dependency: <code>pynput</code></li>
         </ul>
       </section>
 
@@ -50,28 +50,16 @@
       <section>
         <h2 class="text-2xl font-bold text-green-400 mb-4">📦 How to Use</h2>
         <ol class="list-decimal list-inside text-gray-300 space-y-2">
-          <li>Download the ZIP and extract it.</li>
-          <li>Make sure Python 3.10+ is installed.</li>
+          <li>Download the EXE or the source code above.</li>
+          <li>EXE: Just run it on Windows. No setup needed.</li>
+          <li>Source: Make sure Python 3.10+ is installed.</li>
           <li>Install the dependency:
             <code class="bg-gray-800 text-green-300 px-2 py-1 rounded">pip install pynput</code>
           </li>
-          <li>Run the app:
+          <li>Run it via terminal:
             <code class="bg-gray-800 text-green-300 px-2 py-1 rounded">python autoclicker.py</code>
           </li>
         </ol>
-      </section>
-
-      <!-- GitHub Button -->
-      <section class="text-center">
-        <h2 class="text-2xl font-bold text-green-400 mb-4">🔗 GitHub</h2>
-        <iframe
-          src="https://ghbtns.com/github-btn.html?user=Aarnav-Tech&repo=Python-Autoclicker&type=star&count=true&size=large"
-          frameborder="0"
-          scrolling="0"
-          width="160"
-          height="30"
-          title="GitHub Stars"
-        ></iframe>
       </section>
 
     </main>
