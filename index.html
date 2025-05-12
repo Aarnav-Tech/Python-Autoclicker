@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="bg-gray-900 text-white transition-colors duration-500">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,139 +7,119 @@
   <link rel="icon" href="https://raw.githubusercontent.com/Aarnav-Tech/Python-Autoclicker/refs/heads/web/app.ico" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
-    // Tailwind dark mode setup
     tailwind.config = {
-      darkMode: 'class'
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#2563eb'
+          }
+        }
+      }
     };
   </script>
 </head>
-<body class="font-sans transition-colors duration-500">
-
-  <!-- Header -->
-  <header class="text-center py-12 bg-gray-800 dark:bg-gray-100 dark:text-black shadow-md">
-    <div class="flex justify-end items-center max-w-6xl mx-auto px-4">
-      <!-- Theme Toggle -->
-      <label class="relative inline-flex items-center cursor-pointer">
+<body class="bg-white text-black dark:bg-zinc-900 dark:text-white transition-colors duration-500">
+  <div class="min-h-screen flex flex-col items-center justify-center px-4">
+    <!-- Dark Mode Switch -->
+    <div class="absolute top-5 right-5">
+      <label class="inline-flex items-center cursor-pointer">
         <input type="checkbox" id="themeToggle" class="sr-only peer">
-        <div class="w-11 h-6 bg-gray-400 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-500"></div>
-        <span class="ml-3 text-sm font-medium text-gray-200 dark:text-gray-700">Dark Mode</span>
+        <div class="w-14 h-8 bg-gray-300 rounded-full peer dark:bg-zinc-600 peer-checked:bg-primary transition-all duration-500 relative">
+          <span class="absolute left-1 top-1 w-6 h-6 bg-white dark:bg-black rounded-full transition-all duration-500 peer-checked:translate-x-6"></span>
+        </div>
+        <span id="themeLabel" class="ml-3 text-sm font-medium">Light Mode</span>
       </label>
     </div>
-    <h1 class="text-4xl font-extrabold text-green-400 dark:text-green-600 mt-6">🐍 Python Autoclicker</h1>
-    <p class="text-lg text-gray-300 dark:text-gray-700 mt-2">Fast, simple, and customizable Python-based autoclicker for Windows.</p>
-    <div class="mt-6 flex justify-center flex-wrap gap-4">
-      <a href="https://github.com/Aarnav-Tech/Python-Autoclicker/releases/download/v1/autoclicker.exe" target="_blank"
-         class="px-6 py-2 bg-green-500 text-white rounded-full hover:bg-green-600 transition font-semibold shadow-lg">
-        🖱️ Download .exe (v1)
-      </a>
-      <a href="https://github.com/Aarnav-Tech/Python-Autoclicker/archive/refs/heads/main.zip" target="_blank"
-         class="px-6 py-2 border border-green-400 text-green-400 rounded-full hover:bg-green-600 hover:text-white transition font-semibold shadow-lg">
-        📦 Source Code (.zip)
-      </a>
-    </div>
-  </header>
 
-  <!-- OS Warning -->
-  <div id="os-warning" class="max-w-3xl mx-auto px-6 py-4 hidden bg-red-800 text-red-100 border border-red-500 rounded mt-8">
-    ⚠️ This autoclicker uses the <code>msvcrt</code> module which only works on <strong>Windows</strong>. You may encounter errors on macOS/Linux.
+    <div class="max-w-2xl w-full text-center space-y-6">
+      <img src="https://raw.githubusercontent.com/Aarnav-Tech/Python-Autoclicker/refs/heads/web/app.ico" alt="Autoclicker Icon" class="w-20 h-20 mx-auto mb-2" />
+      <h1 class="text-4xl font-bold">Python Autoclicker</h1>
+      <p class="text-lg opacity-80">A simple and lightweight autoclicker made with Python.</p>
+
+      <!-- OS Warning -->
+      <div id="osWarning" class="hidden bg-yellow-100 text-yellow-800 border border-yellow-300 px-4 py-3 rounded-lg text-sm">
+        ⚠️ This app is for Windows only. It may not work on your OS.
+      </div>
+
+      <!-- Download Button -->
+      <a href="https://github.com/Aarnav-Tech/Python-Autoclicker/releases/download/v1/autoclicker.exe" 
+         download 
+         class="inline-block bg-primary text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition">
+        Download Latest (.exe)
+      </a>
+
+      <!-- Requirements -->
+      <div class="text-left bg-zinc-100 dark:bg-zinc-800 p-5 rounded-xl mt-6 space-y-4 shadow">
+        <h2 class="text-xl font-semibold">💻 Requirements</h2>
+        <ul class="list-disc list-inside">
+          <li>Python 3.10+</li>
+          <li><code class="bg-zinc-200 dark:bg-zinc-700 px-2 py-0.5 rounded">pynput</code></li>
+          <li><code class="bg-zinc-200 dark:bg-zinc-700 px-2 py-0.5 rounded">msvcrt</code> (builtin on Windows)</li>
+        </ul>
+      </div>
+
+      <!-- Install Command -->
+      <div class="bg-zinc-100 dark:bg-zinc-800 p-4 rounded-xl text-left shadow space-y-2 mt-4">
+        <h2 class="font-medium">📦 Install dependencies:</h2>
+        <div class="flex items-center justify-between bg-zinc-200 dark:bg-zinc-700 px-3 py-2 rounded">
+          <code id="pipCommand">pip install pynput</code>
+          <button onclick="copyText('pipCommand')" class="ml-3 text-sm px-2 py-1 bg-primary text-white rounded hover:bg-blue-700 transition">Copy</button>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- Main Content -->
-  <main class="max-w-4xl mx-auto px-6 py-12 space-y-16">
+  <!-- TOAST -->
+<div id="toast" class="fixed bottom-5 right-5 bg-green-600 text-white px-4 py-2 rounded-lg shadow-lg opacity-0 pointer-events-none transition-all duration-500 z-50">
+  Copied to clipboard!
+</div>
 
-    <!-- Features -->
-    <section>
-      <h2 class="text-2xl font-bold text-green-400 dark:text-green-600 mb-4">🛠️ Features</h2>
-      <ul class="list-disc list-inside text-gray-300 dark:text-gray-800 space-y-2">
-        <li>✔ Ultra-lightweight and fast</li>
-        <li>✔ Set custom click intervals and button</li>
-        <li>✔ Global hotkeys to start and stop</li>
-        <li>✔ Only one dependency: <code>pynput</code></li>
-      </ul>
-    </section>
+<script>
+  // Theme toggle
+  const toggle = document.getElementById('themeToggle');
+  const label = document.getElementById('themeLabel');
+  const html = document.documentElement;
 
-    <!-- How to Use -->
-    <section>
-      <h2 class="text-2xl font-bold text-green-400 dark:text-green-600 mb-4">📦 How to Use</h2>
-      <ol class="list-decimal list-inside text-gray-300 dark:text-gray-800 space-y-4">
-        <li>Download the EXE or the source code above.</li>
-        <li>EXE: Just run it on Windows. No setup needed.</li>
-        <li>Source: Make sure Python 3.10+ is installed.</li>
-        <li>Install the dependency:
-          <div class="relative mt-2">
-            <code class="block bg-gray-800 dark:bg-gray-200 text-green-300 dark:text-green-700 px-4 py-2 rounded w-full overflow-x-auto" id="code1">pip install pynput</code>
-            <button onclick="copyCode('code1', this)" class="absolute top-1 right-1 text-sm bg-gray-700 dark:bg-gray-300 dark:text-black hover:bg-gray-600 text-white px-2 py-1 rounded">📋 Copy</button>
-          </div>
-        </li>
-        <li>Run it via terminal:
-          <div class="relative mt-2">
-            <code class="block bg-gray-800 dark:bg-gray-200 text-green-300 dark:text-green-700 px-4 py-2 rounded w-full overflow-x-auto" id="code2">python autoclicker.py</code>
-            <button onclick="copyCode('code2', this)" class="absolute top-1 right-1 text-sm bg-gray-700 dark:bg-gray-300 dark:text-black hover:bg-gray-600 text-white px-2 py-1 rounded">📋 Copy</button>
-          </div>
-        </li>
-      </ol>
-    </section>
+  toggle.addEventListener('change', () => {
+    html.classList.toggle('dark');
+    label.textContent = html.classList.contains('dark') ? 'Dark Mode' : 'Light Mode';
+    localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+  });
 
-    <!-- Changelog -->
-    <section>
-      <h2 class="text-2xl font-bold text-green-400 dark:text-green-600 mb-4">📝 Changelog (v1)</h2>
-      <ul class="list-disc list-inside text-gray-300 dark:text-gray-800 space-y-2">
-        <li>Initial release with core autoclicker logic</li>
-        <li>Supports custom delays and keys</li>
-        <li>Basic Windows CLI UI</li>
-        <li>EXE compiled with <code>pyinstaller</code></li>
-      </ul>
-    </section>
+  if (localStorage.getItem('theme') === 'dark') {
+    html.classList.add('dark');
+    toggle.checked = true;
+    label.textContent = 'Dark Mode';
+  }
 
-  </main>
+  // OS detection
+  const isWindows = navigator.userAgent.toLowerCase().includes("windows");
+  if (!isWindows) {
+    document.getElementById("osWarning").classList.remove("hidden");
+  }
 
-  <!-- Footer -->
-  <footer class="text-center text-gray-500 dark:text-gray-600 py-6 border-t border-gray-700 dark:border-gray-300">
-    Made with ❤️ by <a href="https://github.com/Aarnav-Tech" target="_blank" class="text-green-400 hover:underline">Aarnav</a>
-  </footer>
+  // Toast function
+  function showToast(msg = "Copied to clipboard!") {
+    const toast = document.getElementById("toast");
+    toast.textContent = msg;
+    toast.classList.remove("opacity-0", "pointer-events-none");
+    toast.classList.add("opacity-100");
 
-  <!-- Scripts -->
-  <script>
-    // OS detection
-    if (!navigator.userAgent.includes("Windows")) {
-      document.getElementById("os-warning").classList.remove("hidden");
-    }
+    setTimeout(() => {
+      toast.classList.add("opacity-0");
+      toast.classList.remove("opacity-100");
+    }, 2000);
+  }
 
-    // Copy buttons
-    function copyCode(codeId, btn) {
-      const code = document.getElementById(codeId).innerText;
-      navigator.clipboard.writeText(code).then(() => {
-        btn.innerText = "✅ Copied!";
-        setTimeout(() => btn.innerText = "📋 Copy", 2000);
-      });
-    }
-
-    // Theme toggle logic
-    const toggle = document.getElementById('themeToggle');
-    const root = document.documentElement;
-
-    function setTheme(isDark) {
-      if (isDark) {
-        root.classList.add('dark');
-        localStorage.setItem('theme', 'dark');
-        toggle.checked = true;
-      } else {
-        root.classList.remove('dark');
-        localStorage.setItem('theme', 'light');
-        toggle.checked = false;
-      }
-    }
-
-    // Load saved preference
-    const userPref = localStorage.getItem('theme');
-    if (userPref === 'dark' || (!userPref && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      setTheme(true);
-    }
-
-    toggle.addEventListener('change', () => {
-      setTheme(toggle.checked);
+  // Copy function
+  function copyText(id) {
+    const text = document.getElementById(id).textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      showToast();
     });
-  </script>
+  }
+</script>
 
 </body>
 </html>
