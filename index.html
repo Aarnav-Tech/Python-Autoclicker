@@ -80,6 +80,19 @@
   const toggle = document.getElementById('themeToggle');
   const label = document.getElementById('themeLabel');
   const html = document.documentElement;
+  // OS detection + auto-hide popup
+const isWindows = navigator.userAgent.toLowerCase().includes("windows");
+if (!isWindows) {
+  const osPopup = document.getElementById("osPopup");
+  osPopup.classList.remove("opacity-0", "pointer-events-none");
+  osPopup.classList.add("opacity-100");
+
+  setTimeout(() => {
+    osPopup.classList.add("opacity-0", "pointer-events-none");
+    osPopup.classList.remove("opacity-100");
+  }, 5000);
+}
+
 
   toggle.addEventListener('change', () => {
     html.classList.toggle('dark');
@@ -120,6 +133,14 @@
     });
   }
 </script>
+<!-- OS Warning Popup -->
+<div id="osPopup" class="fixed bottom-5 left-5 max-w-sm bg-yellow-100 border border-yellow-300 text-yellow-900 px-4 py-3 rounded-lg shadow-lg flex items-start gap-3 opacity-0 pointer-events-none transition-all duration-500 z-50">
+  <span class="text-xl">⚠️</span>
+  <div>
+    <p class="font-semibold">Windows Only</p>
+    <p class="text-sm">This autoclicker is built for Windows. It may not work properly on your OS.</p>
+  </div>
+</div>
 
 </body>
 </html>
