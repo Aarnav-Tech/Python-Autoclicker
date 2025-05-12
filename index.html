@@ -37,11 +37,6 @@
       <h1 class="text-4xl font-bold">Python Autoclicker</h1>
       <p class="text-lg opacity-80">A simple and lightweight autoclicker made with Python.</p>
 
-      <!-- OS Warning -->
-      <div id="osWarning" class="hidden bg-yellow-100 text-yellow-800 border border-yellow-300 px-4 py-3 rounded-lg text-sm">
-        ⚠️ This app is for Windows only. It may not work on your OS.
-      </div>
-
       <!-- Download Button -->
       <a href="https://github.com/Aarnav-Tech/Python-Autoclicker/releases/download/v1/autoclicker.exe" 
          download 
@@ -71,76 +66,71 @@
   </div>
 
   <!-- TOAST -->
-<div id="toast" class="fixed bottom-5 right-5 bg-green-600 text-white px-4 py-2 rounded-lg shadow-lg opacity-0 pointer-events-none transition-all duration-500 z-50">
-  Copied to clipboard!
-</div>
-
-<script>
-  // Theme toggle
-  const toggle = document.getElementById('themeToggle');
-  const label = document.getElementById('themeLabel');
-  const html = document.documentElement;
-  // OS detection + auto-hide popup
-const isWindows = navigator.userAgent.toLowerCase().includes("windows");
-if (!isWindows) {
-  const osPopup = document.getElementById("osPopup");
-  osPopup.classList.remove("opacity-0", "pointer-events-none");
-  osPopup.classList.add("opacity-100");
-
-  setTimeout(() => {
-    osPopup.classList.add("opacity-0", "pointer-events-none");
-    osPopup.classList.remove("opacity-100");
-  }, 5000);
-}
-
-
-  toggle.addEventListener('change', () => {
-    html.classList.toggle('dark');
-    label.textContent = html.classList.contains('dark') ? 'Dark Mode' : 'Light Mode';
-    localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
-  });
-
-  if (localStorage.getItem('theme') === 'dark') {
-    html.classList.add('dark');
-    toggle.checked = true;
-    label.textContent = 'Dark Mode';
-  }
-
-  // OS detection
-  const isWindows = navigator.userAgent.toLowerCase().includes("windows");
-  if (!isWindows) {
-    document.getElementById("osWarning").classList.remove("hidden");
-  }
-
-  // Toast function
-  function showToast(msg = "Copied to clipboard!") {
-    const toast = document.getElementById("toast");
-    toast.textContent = msg;
-    toast.classList.remove("opacity-0", "pointer-events-none");
-    toast.classList.add("opacity-100");
-
-    setTimeout(() => {
-      toast.classList.add("opacity-0");
-      toast.classList.remove("opacity-100");
-    }, 2000);
-  }
-
-  // Copy function
-  function copyText(id) {
-    const text = document.getElementById(id).textContent;
-    navigator.clipboard.writeText(text).then(() => {
-      showToast();
-    });
-  }
-</script>
-<!-- OS Warning Popup -->
-<div id="osPopup" class="fixed bottom-5 left-5 max-w-sm bg-yellow-100 border border-yellow-300 text-yellow-900 px-4 py-3 rounded-lg shadow-lg flex items-start gap-3 opacity-0 pointer-events-none transition-all duration-500 z-50">
-  <span class="text-xl">⚠️</span>
-  <div>
-    <p class="font-semibold">Windows Only</p>
-    <p class="text-sm">This autoclicker is built for Windows. It may not work properly on your OS.</p>
+  <div id="toast" class="fixed bottom-5 right-5 bg-green-600 text-white px-4 py-2 rounded-lg shadow-lg opacity-0 pointer-events-none transition-all duration-500 z-50">
+    Copied to clipboard!
   </div>
-</div>
 
+  <!-- OS Warning Popup -->
+  <div id="osPopup" class="fixed bottom-5 left-5 max-w-sm bg-yellow-100 border border-yellow-300 text-yellow-900 px-4 py-3 rounded-lg shadow-lg flex items-start gap-3 opacity-0 pointer-events-none transition-all duration-500 z-50">
+    <span class="text-xl">⚠️</span>
+    <div>
+      <p class="font-semibold">Windows Only</p>
+      <p class="text-sm">This autoclicker is built for Windows. It may not work properly on your OS.</p>
+    </div>
+  </div>
+
+  <script>
+    const toggle = document.getElementById('themeToggle');
+    const label = document.getElementById('themeLabel');
+    const html = document.documentElement;
+
+    // Theme Toggle
+    toggle.addEventListener('change', () => {
+      html.classList.toggle('dark');
+      label.textContent = html.classList.contains('dark') ? 'Dark Mode' : 'Light Mode';
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+
+    // Load theme from storage
+    if (localStorage.getItem('theme') === 'dark') {
+      html.classList.add('dark');
+      toggle.checked = true;
+      label.textContent = 'Dark Mode';
+    }
+
+    // OS Detection Toast
+    const isWindows = navigator.userAgent.toLowerCase().includes("windows");
+    if (!isWindows) {
+      const osPopup = document.getElementById("osPopup");
+      osPopup.classList.remove("opacity-0", "pointer-events-none");
+      osPopup.classList.add("opacity-100");
+
+      setTimeout(() => {
+        osPopup.classList.add("opacity-0", "pointer-events-none");
+        osPopup.classList.remove("opacity-100");
+      }, 5000);
+    }
+
+    // Toast Function
+    function showToast(msg = "Copied to clipboard!") {
+      const toast = document.getElementById("toast");
+      toast.textContent = msg;
+      toast.classList.remove("opacity-0", "pointer-events-none");
+      toast.classList.add("opacity-100");
+
+      setTimeout(() => {
+        toast.classList.add("opacity-0");
+        toast.classList.remove("opacity-100");
+      }, 2000);
+    }
+
+    // Copy Text
+    function copyText(id) {
+      const text = document.getElementById(id).textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        showToast();
+      });
+    }
+  </script>
 </body>
 </html>
