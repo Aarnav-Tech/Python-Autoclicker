@@ -1,49 +1,135 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Python Autoclicker</title>
-  <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="https://raw.githubusercontent.com/Aarnav-Tech/Python-Autoclicker/refs/heads/web/app.ico" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#2563eb'
+          }
+        }
+      }
+    };
+  </script>
 </head>
-<body>
-  <header>
-    <h1>🐍 Python Autoclicker</h1>
-    <p>Fast, simple, and customizable autoclicker written in Python.</p>
-    <a class="button" href="https://github.com/Aarnav-Tech/Python-Autoclicker/archive/refs/heads/main.zip" target="_blank">⬇ Download ZIP</a>
-    <a class="button ghost" href="https://github.com/Aarnav-Tech/Python-Autoclicker" target="_blank">⭐ View on GitHub</a>
-  </header>
+<body class="bg-white text-black dark:bg-zinc-900 dark:text-white transition-colors duration-500">
+  <div class="min-h-screen flex flex-col items-center justify-center px-4">
+    <!-- Dark Mode Switch -->
+    <div class="absolute top-5 right-5">
+      <label class="inline-flex items-center cursor-pointer">
+        <input type="checkbox" id="themeToggle" class="sr-only peer">
+        <div class="w-14 h-8 bg-gray-300 rounded-full peer dark:bg-zinc-600 peer-checked:bg-primary transition-all duration-500 relative">
+          <span class="absolute left-1 top-1 w-6 h-6 bg-white dark:bg-black rounded-full transition-all duration-500 peer-checked:translate-x-6"></span>
+        </div>
+        <span id="themeLabel" class="ml-3 text-sm font-medium">Light Mode</span>
+      </label>
+    </div>
 
-  <main>
-    <section>
-      <h2>🛠️ Features</h2>
-      <ul>
-        <li>✔ Cross-platform (Windows, Linux, macOS)</li>
-        <li>✔ Choose click interval and button</li>
-        <li>✔ Start/stop with hotkeys</li>
-        <li>✔ No installation required</li>
-      </ul>
-    </section>
+    <div class="max-w-2xl w-full text-center space-y-6">
+      <img src="https://raw.githubusercontent.com/Aarnav-Tech/Python-Autoclicker/refs/heads/web/app.ico" alt="Autoclicker Icon" class="w-20 h-20 mx-auto mb-2" />
+      <h1 class="text-4xl font-bold">Python Autoclicker</h1>
+      <p class="text-lg opacity-80">A simple and lightweight autoclicker made with Python. (Made with ❤ by Aarnav)</p>
+      <!-- Download Button -->
+      <a href="https://github.com/Aarnav-Tech/Python-Autoclicker/releases/download/v1/autoclicker.exe" 
+         download 
+         class="inline-block bg-primary text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition">
+        Download Latest (.exe)
+      </a>
 
-    <section>
-      <h2>📦 How to Use</h2>
-      <ol>
-        <li>Download and unzip the repo.</li>
-        <li>Install Python 3.10+ if not already installed.</li>
-        <li>Install dependencies: <code>pip install pynput</code></li>
-        <li>Run: <code>python autoclicker.py</code></li>
-      </ol>
-    </section>
+      <!-- Requirements -->
+      <div class="text-left bg-zinc-100 dark:bg-zinc-800 p-5 rounded-xl mt-6 space-y-4 shadow">
+        <h2 class="text-xl font-semibold">💻 Requirements (For compiling source code)</h2>
+        <ul class="list-disc list-inside">
+          <li>Python 3.10+</li>
+          <li><code class="bg-zinc-200 dark:bg-zinc-700 px-2 py-0.5 rounded">pynput</code></li>
+          <li><code class="bg-zinc-200 dark:bg-zinc-700 px-2 py-0.5 rounded">msvcrt</code> (builtin on Windows)</li>
+        </ul>
+      </div>
 
-    <section>
-      <h2>🔗 GitHub</h2>
-      <iframe src="https://ghbtns.com/github-btn.html?user=Aarnav-Tech&repo=Python-Autoclicker&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160" height="30" title="GitHub Stars"></iframe>
-    </section>
-  </main>
+      <!-- Install Command -->
+      <div class="bg-zinc-100 dark:bg-zinc-800 p-4 rounded-xl text-left shadow space-y-2 mt-4">
+        <h2 class="font-medium">📦 Install dependencies (For compiling source code):</h2>
+        <div class="flex items-center justify-between bg-zinc-200 dark:bg-zinc-700 px-3 py-2 rounded">
+          <code id="pipCommand">pip install pynput</code>
+          <button onclick="copyText('pipCommand')" class="ml-3 text-sm px-2 py-1 bg-primary text-white rounded hover:bg-blue-700 transition">Copy</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <footer>
-    <p>Made with ❤️ by Aarnav</p>
-  </footer>
+  <!-- TOAST -->
+  <div id="toast" class="fixed bottom-5 right-5 bg-green-600 text-white px-4 py-2 rounded-lg shadow-lg opacity-0 pointer-events-none transition-all duration-500 z-50">
+    Copied to clipboard!
+  </div>
+
+  <!-- OS Warning Popup -->
+  <div id="osPopup" class="fixed bottom-5 left-5 max-w-sm bg-yellow-100 border border-yellow-300 text-yellow-900 px-4 py-3 rounded-lg shadow-lg flex items-start gap-3 opacity-0 pointer-events-none transition-all duration-500 z-50">
+    <span class="text-xl">⚠️</span>
+    <div>
+      <p class="font-semibold">Windows Only</p>
+      <p class="text-sm">This autoclicker is built for Windows. It may not work properly on your OS.</p>
+    </div>
+  </div>
+
+  <script>
+    const toggle = document.getElementById('themeToggle');
+    const label = document.getElementById('themeLabel');
+    const html = document.documentElement;
+
+    // Theme Toggle
+    toggle.addEventListener('change', () => {
+      html.classList.toggle('dark');
+      label.textContent = html.classList.contains('dark') ? 'Dark Mode' : 'Light Mode';
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+
+    // Load theme from storage
+    if (localStorage.getItem('theme') === 'dark') {
+      html.classList.add('dark');
+      toggle.checked = true;
+      label.textContent = 'Dark Mode';
+    }
+
+    // OS Detection Toast
+    const isWindows = navigator.userAgent.toLowerCase().includes("windows");
+    if (!isWindows) {
+      const osPopup = document.getElementById("osPopup");
+      osPopup.classList.remove("opacity-0", "pointer-events-none");
+      osPopup.classList.add("opacity-100");
+
+      setTimeout(() => {
+        osPopup.classList.add("opacity-0", "pointer-events-none");
+        osPopup.classList.remove("opacity-100");
+      }, 10000);
+    }
+
+    // Toast Function
+    function showToast(msg = "Copied to clipboard!") {
+      const toast = document.getElementById("toast");
+      toast.textContent = msg;
+      toast.classList.remove("opacity-0", "pointer-events-none");
+      toast.classList.add("opacity-100");
+
+      setTimeout(() => {
+        toast.classList.add("opacity-0");
+        toast.classList.remove("opacity-100");
+      }, 2000);
+    }
+
+    // Copy Text
+    function copyText(id) {
+      const text = document.getElementById(id).textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        showToast();
+      });
+    }
+  </script>
 </body>
 </html>
